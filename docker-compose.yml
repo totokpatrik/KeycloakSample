@@ -1,0 +1,6 @@
+services:
+  keycloaksample.api1:
+    image: ${DOCKER_REGISTRY-}keycloaksampleapi1
+    build:
+      context: .
+      dockerfile: src/KeycloakSample.Api1/Dockerfile

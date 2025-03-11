@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0BD88D37-4F8B-43FF-9316-444CC0DE5195}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakSample.Api1", "src\KeycloakSample.Api1\KeycloakSample.Api1.csproj", "{A11F4904-B442-4922-ABD5-3A5B69B4E21E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7B8CB058-71B0-409D-8C7C-466763D9D598}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakSample.Proxy", "src\KeycloakSample.Proxy\KeycloakSample.Proxy.csproj", "{6F88187D-9756-45F7-8D5D-F8DA71C13A4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakSample.Api2", "src\KeycloakSample.Api2\KeycloakSample.Api2.csproj", "{AF81A06C-0C1A-46DD-81A5-BE0248E20B7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakSample.Blazor", "src\KeycloakSample.Blazor\KeycloakSample.Blazor\KeycloakSample.Blazor.csproj", "{4D0EBEB9-5A2D-4572-A3B8-DB386EE7CD81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakSample.Blazor.Client", "src\KeycloakSample.Blazor\KeycloakSample.Blazor.Client\KeycloakSample.Blazor.Client.csproj", "{5FC0FAFA-AE8E-489C-963C-9DD65B174106}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A11F4904-B442-4922-ABD5-3A5B69B4E21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A11F4904-B442-4922-ABD5-3A5B69B4E21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A11F4904-B442-4922-ABD5-3A5B69B4E21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A11F4904-B442-4922-ABD5-3A5B69B4E21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B8CB058-71B0-409D-8C7C-466763D9D598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8CB058-71B0-409D-8C7C-466763D9D598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8CB058-71B0-409D-8C7C-466763D9D598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8CB058-71B0-409D-8C7C-466763D9D598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F88187D-9756-45F7-8D5D-F8DA71C13A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F88187D-9756-45F7-8D5D-F8DA71C13A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F88187D-9756-45F7-8D5D-F8DA71C13A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F88187D-9756-45F7-8D5D-F8DA71C13A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF81A06C-0C1A-46DD-81A5-BE0248E20B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF81A06C-0C1A-46DD-81A5-BE0248E20B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF81A06C-0C1A-46DD-81A5-BE0248E20B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF81A06C-0C1A-46DD-81A5-BE0248E20B7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D0EBEB9-5A2D-4572-A3B8-DB386EE7CD81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D0EBEB9-5A2D-4572-A3B8-DB386EE7CD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D0EBEB9-5A2D-4572-A3B8-DB386EE7CD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D0EBEB9-5A2D-4572-A3B8-DB386EE7CD81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC0FAFA-AE8E-489C-963C-9DD65B174106}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC0FAFA-AE8E-489C-963C-9DD65B174106}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC0FAFA-AE8E-489C-963C-9DD65B174106}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC0FAFA-AE8E-489C-963C-9DD65B174106}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A11F4904-B442-4922-ABD5-3A5B69B4E21E} = {0BD88D37-4F8B-43FF-9316-444CC0DE5195}
+		{6F88187D-9756-45F7-8D5D-F8DA71C13A4C} = {0BD88D37-4F8B-43FF-9316-444CC0DE5195}
+		{AF81A06C-0C1A-46DD-81A5-BE0248E20B7F} = {0BD88D37-4F8B-43FF-9316-444CC0DE5195}
+		{4D0EBEB9-5A2D-4572-A3B8-DB386EE7CD81} = {0BD88D37-4F8B-43FF-9316-444CC0DE5195}
+		{5FC0FAFA-AE8E-489C-963C-9DD65B174106} = {0BD88D37-4F8B-43FF-9316-444CC0DE5195}
+	EndGlobalSection
+EndGlobal
