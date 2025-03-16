@@ -1,6 +1,66 @@
 services:
   keycloaksample.api1:
+    container_name: Api_1
     image: ${DOCKER_REGISTRY-}keycloaksampleapi1
     build:
       context: .
       dockerfile: src/KeycloakSample.Api1/Dockerfile
+
+  keycloaksample.api2:
+    container_name: Api_2
+    image: ${DOCKER_REGISTRY-}keycloaksampleapi2
+    build:
+      context: .
+      dockerfile: src/KeycloakSample.Api2/Dockerfile
+
+  keycloaksample.proxy:
+    container_name: Proxy
+    image: ${DOCKER_REGISTRY-}keycloaksampleproxy
+    build:
+      context: .
+      dockerfile: src/KeycloakSample.Proxy/Dockerfile
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    container_name: keycloak_web
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloakdb:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+
+      KC_LOG_LEVEL: info
+      KC_METRICS_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev
+    depends_on:
+      - keycloakdb
+    ports:
+      - 18080:8080
+
+  keycloakdb:
+    image: postgres:15.6
+    container_name: keycloak_db
+    volumes:
+      - keycloakdb_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: Jaeger
+    ports:
+      - 4317:4317
+      - 4318:4318
+      - 16686:16686
+
+volumes:
+  keycloakdb_data:

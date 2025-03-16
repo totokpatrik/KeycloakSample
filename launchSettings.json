@@ -4,7 +4,10 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "keycloaksample.api1": "StartDebugging"
+        "keycloaksample.api1": "StartDebugging",
+        "keycloaksample.proxy": "StartDebugging",
+        "keycloaksample.blazor": "StartDebugging",
+        "keycloaksample.api2": "StartDebugging"
       }
     }
   }
