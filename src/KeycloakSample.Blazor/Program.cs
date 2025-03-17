@@ -1,5 +1,5 @@
-using Keycloak.Blazor.Services;
 using KeycloakSample.Blazor;
+using KeycloakSample.Blazor.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -16,8 +16,6 @@ builder.Services.AddOidcAuthentication(options =>
     options.ProviderOptions.MetadataUrl = builder.Configuration["Keycloak:auth-server-url"] + "/realms/" + builder.Configuration["Keycloak:realm"] + "/.well-known/openid-configuration";
 
     options.UserOptions.RoleClaim = "roles";
-});
-
-builder.Services.AddApiAuthorization().AddAccountClaimsPrincipalFactory<CustomUserFactory>();
+}).AddAccountClaimsPrincipalFactory<CustomUserFactory>();
 
 await builder.Build().RunAsync();

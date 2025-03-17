@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication.Internal;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace Keycloak.Blazor.Services
+namespace KeycloakSample.Blazor.Services
 {
     public class CustomUserFactory : AccountClaimsPrincipalFactory<RemoteUserAccount>
     {
@@ -33,7 +33,7 @@ namespace Keycloak.Blazor.Services
             {
                 var key = prop.Key;
                 var value = prop.Value;
-                if (value != null && (value is JsonElement element && element.ValueKind == JsonValueKind.Array))
+                if (value != null && value is JsonElement element && element.ValueKind == JsonValueKind.Array)
                 {
                     // Remove the Roles claim with an array value and create a separate one for each role.
                     claimsIdentity.RemoveClaim(claimsIdentity.FindFirst(prop.Key));
