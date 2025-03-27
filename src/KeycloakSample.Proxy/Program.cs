@@ -46,7 +46,7 @@ builder.Services.AddCors(options =>
 
 WebApplication app = builder.Build();
 
-app.UseCors();
+app.UseCors("customPolicy");
 app.MapReverseProxy();
 
 app.UseAuthentication();

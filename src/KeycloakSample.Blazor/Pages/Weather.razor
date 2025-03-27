@@ -1,9 +1,9 @@
 ﻿@page "/weather"
-@inject HttpClient Http
+@inject IHttpClientFactory Factory
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<h1>Weather from api1</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -38,10 +38,13 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private WeatherForecast[]? forecasts2;
+    private HttpClient _http;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        _http = Factory.CreateClient("API");
+        forecasts = await _http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
     }
 
     public class WeatherForecast
