@@ -8,7 +8,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         c.MetadataAddress = $"{builder.Configuration["Keycloak:auth-server-url"]}realms/{builder.Configuration["Keycloak:realm"]}/.well-known/openid-configuration";
         c.RequireHttpsMetadata = false;
         c.Authority = $"{builder.Configuration["Keycloak:auth-server-url"]}realms/{builder.Configuration["Keycloak:realm"]}/account";
-        c.Audience = "account";
+        c.Audience = $"{builder.Configuration["Keycloak:audience"]}";
     });
 builder.Services.AddAuthorization();
 

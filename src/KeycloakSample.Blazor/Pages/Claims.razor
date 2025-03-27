@@ -1,4 +1,4 @@
-﻿@page "/roles"
+﻿@page "/claims"
 @attribute [Authorize]
 @using System.Security.Claims
 <h1>User Claims</h1>
@@ -13,14 +13,11 @@
     </ul>
 }
 
-<p>IsAdmin: @IsAdmin</p>
-
 @code {
     private IEnumerable<Claim> claims = [];
 
     [CascadingParameter]
     private Task<AuthenticationState>? AuthState { get; set; }
-    private bool IsAdmin;
 
     protected override async Task OnInitializedAsync()
     {
@@ -31,6 +28,5 @@
 
         var authState = await AuthState;
         claims = authState.User.Claims;
-        IsAdmin = authState.User.IsInRole("admin");
     }
 }
