@@ -20,6 +20,13 @@ services:
       context: .
       dockerfile: src/KeycloakSample.Proxy/Dockerfile
 
+  keycloaksample.blazor:
+    container_name: Blazor
+    image: ${DOCKER_REGISTRY-}keycloaksampleblazor
+    build:
+      context: .
+      dockerfile: src/KeycloakSample.Blazor/Dockerfile
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.0
     container_name: keycloak_web

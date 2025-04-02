@@ -1,11 +1,15 @@
 ﻿@page "/weather"
-@inject IHttpClientFactory Factory
+@using KeycloakSample.Blazor.HttpService
+@using Microsoft.AspNetCore.Authorization
+@attribute [StreamRendering]
+@inject IHttpService HttpService
+@attribute [Authorize(Roles ="admin")]
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather from api1</h1>
+<h1>Weather</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>This component demonstrates showing data.</p>
 
 @if (forecasts == null)
 {
@@ -38,12 +42,10 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
-    private HttpClient _http;
 
     protected override async Task OnInitializedAsync()
     {
-        _http = Factory.CreateClient("API");
-        forecasts = await _http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        forecasts = await HttpService.Get<WeatherForecast[]>("WeatherForecast");
     }
 
     public class WeatherForecast
