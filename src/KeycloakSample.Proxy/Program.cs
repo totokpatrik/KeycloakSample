@@ -11,22 +11,34 @@ builder.Services
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(o =>
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
     {
-        o.RequireHttpsMetadata = false;
-        o.Audience = builder.Configuration["Authentication:Audience"];
-        o.MetadataAddress = builder.Configuration["Authentication:MetadataAddress"]!;
-        o.TokenValidationParameters = new TokenValidationParameters
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidIssuer = builder.Configuration["Authentication:ValidIssuer"]
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
         };
+
+        options.MetadataAddress = $"{builder.Configuration["Keycloak:auth-server-url"]}realms/{builder.Configuration["Keycloak:realm"]}/.well-known/openid-configuration";
+        options.RequireHttpsMetadata = false;
+        options.Authority = $"{builder.Configuration["Keycloak:auth-server-url"]}realms/{builder.Configuration["Keycloak:realm"]}/account";
+        options.Audience = $"{builder.Configuration["Keycloak:audience"]}";
     });
 
+builder.Services.AddAuthorization();
+
+//OTEL
 builder.Services
     .AddOpenTelemetry()
-    .ConfigureResource(resource => resource.AddService("KeycloakSample.Proxy"))
+    .ConfigureResource(resource => resource.AddService(typeof(Program).Assembly!.GetName().Name!))
     .WithTracing(tracing =>
     {
         tracing
@@ -36,17 +48,11 @@ builder.Services
         tracing.AddOtlpExporter();
     });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("customPolicy", builder =>
-    {
-        builder.AllowAnyOrigin();
-    });
-});
+builder.Services.AddCors();
 
 WebApplication app = builder.Build();
 
-app.UseCors("customPolicy");
+app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.MapReverseProxy();
 
 app.UseAuthentication();

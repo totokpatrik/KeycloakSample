@@ -4,11 +4,13 @@ using KeycloakSample.Blazor.HttpService;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped(sp =>
-    new HttpClient { BaseAddress = new Uri("http://localhost:50051") });
+    new HttpClient { BaseAddress = new Uri("http://localhost:50000") });
 builder.Services.AddScoped<IHttpService, HttpService>();
 
 // Add services to the container.
@@ -34,11 +36,23 @@ builder.Services.AddAuthentication(options =>
             RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         };
         oidcOptions.SaveTokens = true;
-        oidcOptions.RefreshInterval = new TimeSpan(0, 0, 10);
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
 builder.Services.AddAuthorization();
+
+//OTEL
+builder.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService(typeof(Program).Assembly!.GetName().Name!))
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation();
+
+        tracing.AddOtlpExporter();
+    });
 
 builder.Services.AddCascadingAuthenticationState();
 

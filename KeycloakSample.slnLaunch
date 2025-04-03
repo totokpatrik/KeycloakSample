@@ -1,0 +1,27 @@
+[
+  {
+    "Name": "Local",
+    "Projects": [
+      {
+        "Path": "src\\KeycloakSample.Api1\\KeycloakSample.Api1.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "src\\KeycloakSample.Proxy\\KeycloakSample.Proxy.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "src\\KeycloakSample.Api2\\KeycloakSample.Api2.csproj",
+        "Action": "Start",
+        "DebugTarget": "http"
+      },
+      {
+        "Path": "src\\KeycloakSample.Blazor\\KeycloakSample.Blazor.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]

@@ -1,4 +1,4 @@
-﻿@page "/weather1"
+﻿@page "/weather2"
 @using KeycloakSample.Blazor.HttpService
 @using Microsoft.AspNetCore.Authorization
 @attribute [StreamRendering]
@@ -45,7 +45,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await HttpService.Get<WeatherForecast[]>("api/1/WeatherForecast");
+        forecasts = await HttpService.Get<WeatherForecast[]>("api/2/WeatherForecast");
     }
 
     public class WeatherForecast

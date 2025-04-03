@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
@@ -27,6 +29,19 @@ builder.Services.AddAuthentication(option =>
 
 builder.Services.AddAuthorization();
 
+//OTEL
+builder.Services
+    .AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService(typeof(Program).Assembly!.GetName().Name!))
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation();
+
+        tracing.AddOtlpExporter();
+    });
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -34,7 +49,6 @@ var app = builder.Build();
 
 app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-//app.UseCookiePolicy();
 app.UseAuthentication();
 app.UseAuthorization();
 

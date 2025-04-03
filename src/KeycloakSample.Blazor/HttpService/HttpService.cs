@@ -65,7 +65,6 @@ public class HttpService : IHttpService
         // add jwt auth header if user is logged in and request is to the api url
         var accessToken = await _httpContextAccessor.HttpContext!.GetTokenAsync("access_token");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-        Console.WriteLine("Token: " + accessToken);
 
         using var response = await _httpClient.SendAsync(request);
 
