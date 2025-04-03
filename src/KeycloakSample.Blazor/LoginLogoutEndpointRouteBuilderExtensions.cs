@@ -17,6 +17,7 @@ internal static class LoginLogoutEndpointRouteBuilderExtensions
         // without being able to choose another account.
         group.MapPost("/logout", ([FromForm] string? returnUrl) => TypedResults.SignOut(GetAuthProperties(returnUrl), ["Cookies", "OpenIdConnect"]));
 
+        group.MapGet("/logout", ([FromQuery(Name = "returnUrl")] string? returnUrl) => TypedResults.SignOut(GetAuthProperties(returnUrl), ["Cookies", "OpenIdConnect"]));
         return group;
     }
 

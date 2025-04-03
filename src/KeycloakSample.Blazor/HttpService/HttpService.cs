@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using System.Net.Http.Headers;
@@ -13,18 +14,21 @@ public class HttpService : IHttpService
     private readonly NavigationManager _navigationManager;
     private readonly IConfiguration _configuration;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAntiforgery _antiforgery;
 
     public HttpService(
         HttpClient httpClient,
         NavigationManager navigationManager,
         IConfiguration configuration,
-        IHttpContextAccessor httpContextAccessor
+        IHttpContextAccessor httpContextAccessor,
+        IAntiforgery antiforgery
     )
     {
         _httpClient = httpClient;
         _navigationManager = navigationManager;
         _configuration = configuration;
         _httpContextAccessor = httpContextAccessor;
+        _antiforgery = antiforgery;
     }
 
     public async Task<T> Delete<T>(string uri, object value)
@@ -67,7 +71,8 @@ public class HttpService : IHttpService
         // auto logout on 401 response
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
-            await _httpContextAccessor.HttpContext!.SignOutAsync();
+            var returnUrl = _navigationManager.ToBaseRelativePath(_navigationManager.Uri);
+            _navigationManager.NavigateTo($"/authentication/logout?returnUrl={Uri.EscapeDataString(returnUrl)}", true);
             return default!;
         }
 
@@ -82,27 +87,5 @@ public class HttpService : IHttpService
         var result = await response.Content.ReadFromJsonAsync<T>();
 
         return result!;
-    }
-
-    private static AuthenticationProperties GetAuthProperties(string? returnUrl)
-    {
-        // TODO: Use HttpContext.Request.PathBase instead.
-        const string pathBase = "/";
-
-        // Prevent open redirects.
-        if (string.IsNullOrEmpty(returnUrl))
-        {
-            returnUrl = pathBase;
-        }
-        else if (!Uri.IsWellFormedUriString(returnUrl, UriKind.Relative))
-        {
-            returnUrl = new Uri(returnUrl, UriKind.Absolute).PathAndQuery;
-        }
-        else if (returnUrl[0] != '/')
-        {
-            returnUrl = $"{pathBase}{returnUrl}";
-        }
-
-        return new AuthenticationProperties { RedirectUri = returnUrl };
     }
 }

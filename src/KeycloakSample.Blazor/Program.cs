@@ -11,8 +11,6 @@ builder.Services.AddScoped(sp =>
     new HttpClient { BaseAddress = new Uri("http://localhost:50051") });
 builder.Services.AddScoped<IHttpService, HttpService>();
 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
 // Add services to the container.
 builder.Services.AddAuthentication(options =>
 {
@@ -29,7 +27,7 @@ builder.Services.AddAuthentication(options =>
         oidcOptions.SaveTokens = true;
         oidcOptions.Scope.Add("openid");
         oidcOptions.CallbackPath = "/login-callback";
-        oidcOptions.SignedOutCallbackPath = "/logout-callback";
+        oidcOptions.SignOutScheme = OpenIdConnectDefaults.DisplayName;
         oidcOptions.TokenValidationParameters = new TokenValidationParameters
         {
             NameClaimType = "preferred_username",
@@ -45,6 +43,8 @@ builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
