@@ -34,6 +34,7 @@ builder.Services.AddAuthentication(options =>
             RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
         };
         oidcOptions.SaveTokens = true;
+        oidcOptions.RefreshInterval = new TimeSpan(0, 0, 10);
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
