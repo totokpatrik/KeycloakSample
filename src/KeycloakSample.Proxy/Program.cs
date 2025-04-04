@@ -48,11 +48,11 @@ builder.Services
         tracing.AddOtlpExporter();
     });
 
-builder.Services.AddCors();
+//builder.Services.AddCors();
 
 WebApplication app = builder.Build();
 
-app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.MapReverseProxy();
 
 app.UseAuthentication();

@@ -20,7 +20,7 @@
       {
         "Path": "src\\KeycloakSample.Blazor\\KeycloakSample.Blazor.csproj",
         "Action": "Start",
-        "DebugTarget": "https"
+        "DebugTarget": "http"
       }
     ]
   }

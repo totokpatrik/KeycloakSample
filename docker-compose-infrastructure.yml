@@ -1,25 +1,4 @@
 services:
-  keycloaksample.api1:
-    container_name: Api_1
-    image: ${DOCKER_REGISTRY-}keycloaksampleapi1
-    build:
-      context: .
-      dockerfile: src/KeycloakSample.Api1/Dockerfile
-
-  keycloaksample.api2:
-    container_name: Api_2
-    image: ${DOCKER_REGISTRY-}keycloaksampleapi2
-    build:
-      context: .
-      dockerfile: src/KeycloakSample.Api2/Dockerfile
-
-  keycloaksample.proxy:
-    container_name: Proxy
-    image: ${DOCKER_REGISTRY-}keycloaksampleproxy
-    build:
-      context: .
-      dockerfile: src/KeycloakSample.Proxy/Dockerfile
-
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.0
     container_name: keycloak_web

@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
 builder.Services.AddScoped(sp =>
-    new HttpClient { BaseAddress = new Uri("http://localhost:50000") });
+    new HttpClient { BaseAddress = new Uri(configuration["ProxyUri"] ?? "http://localhost:50000") });
 builder.Services.AddScoped<IHttpService, HttpService>();
 
 // Add services to the container.
@@ -22,18 +25,18 @@ builder.Services.AddAuthentication(options =>
     .AddOpenIdConnect(oidcOptions =>
     {
         oidcOptions.RequireHttpsMetadata = false;
-        oidcOptions.Authority = "http://localhost:18080/realms/my-realm";
-        oidcOptions.ClientId = "my-client";
-        oidcOptions.ClientSecret = "nIKZcMclxcRiP53BT7jYN7b8YK5WnzXO";
-        oidcOptions.ResponseType = "code";
+        oidcOptions.Authority = $"{configuration["Keycloak:auth-server-url"]}/realms/{configuration["Keycloak:realm"]}";
+        oidcOptions.ClientId = configuration["Keycloak:client-id"];
+        oidcOptions.ClientSecret = configuration["Keycloak:client-secret"];
+        oidcOptions.ResponseType = configuration["Keycloak:response-type"] ?? "code";
         oidcOptions.SaveTokens = true;
         oidcOptions.Scope.Add("openid");
         oidcOptions.CallbackPath = "/login-callback";
         oidcOptions.SignOutScheme = OpenIdConnectDefaults.DisplayName;
         oidcOptions.TokenValidationParameters = new TokenValidationParameters
         {
-            NameClaimType = "preferred_username",
-            RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            NameClaimType = ClaimsIdentity.DefaultNameClaimType,
+            RoleClaimType = ClaimsIdentity.DefaultRoleClaimType
         };
         oidcOptions.SaveTokens = true;
     })

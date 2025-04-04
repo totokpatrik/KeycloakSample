@@ -4,7 +4,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddCors();
+
 
 builder.Services.AddAuthentication(option =>
 {
@@ -45,9 +45,11 @@ builder.Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+//builder.Services.AddCors();
+
 var app = builder.Build();
 
-app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//app.UseCors(a => a.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseAuthentication();
 app.UseAuthorization();
